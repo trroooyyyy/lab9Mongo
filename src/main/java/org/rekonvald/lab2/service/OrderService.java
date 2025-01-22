@@ -1,6 +1,5 @@
 package org.rekonvald.lab2.service;
 
-import org.rekonvald.lab2.entity.Address;
 import org.rekonvald.lab2.entity.Order;
 import org.springframework.stereotype.Service;
 

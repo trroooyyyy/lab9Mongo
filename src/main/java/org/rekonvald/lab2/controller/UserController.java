@@ -1,7 +1,6 @@
 package org.rekonvald.lab2.controller;
 
 import org.rekonvald.lab2.entity.User;
-import org.rekonvald.lab2.service.OrderService;
 import org.rekonvald.lab2.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ public class UserController {
   }
 
   @PostMapping("/login")
-
   public ResponseEntity<?> authenticateUser(@RequestBody User user) {
     if(userService.login(user) == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
