@@ -40,4 +40,7 @@ public class UserService {
             .orElseThrow(NoSuchElementException::new);
   }
 
+  public List<User> getAllUsers() {
+    return users;
+  }
 }
