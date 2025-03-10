@@ -1,9 +1,9 @@
-package org.rekonvald.lab3.controller.order;
+package org.rekonvald.lab4.controller.order;
 
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab3.entity.Order;
-import org.rekonvald.lab3.entity.OrderStatus;
-import org.rekonvald.lab3.service.OrderService;
+import org.rekonvald.lab4.entity.Order;
+import org.rekonvald.lab4.entity.OrderStatus;
+import org.rekonvald.lab4.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

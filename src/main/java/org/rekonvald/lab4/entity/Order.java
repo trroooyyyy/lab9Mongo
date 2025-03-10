@@ -1,4 +1,4 @@
-package org.rekonvald.lab3.entity;
+package org.rekonvald.lab4.entity;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

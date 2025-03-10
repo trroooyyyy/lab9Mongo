@@ -1,4 +1,4 @@
-package org.rekonvald.lab3.entity;
+package org.rekonvald.lab4.entity;
 
 public enum OrderStatus {
     PREPARING,

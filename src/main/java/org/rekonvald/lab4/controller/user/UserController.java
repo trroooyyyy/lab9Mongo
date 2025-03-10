@@ -1,8 +1,8 @@
-package org.rekonvald.lab3.controller.user;
+package org.rekonvald.lab4.controller.user;
 
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab3.entity.User;
-import org.rekonvald.lab3.service.UserService;
+import org.rekonvald.lab4.entity.User;
+import org.rekonvald.lab4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

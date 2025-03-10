@@ -1,6 +1,6 @@
-package org.rekonvald.lab3.service;
+package org.rekonvald.lab4.service;
 
-import org.rekonvald.lab3.entity.User;
+import org.rekonvald.lab4.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

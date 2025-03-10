@@ -1,12 +1,12 @@
-package org.rekonvald.lab3.controller.order;
+package org.rekonvald.lab4.controller.order;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab3.entity.Address;
-import org.rekonvald.lab3.entity.Order;
-import org.rekonvald.lab3.entity.OrderStatus;
-import org.rekonvald.lab3.service.AddressService;
-import org.rekonvald.lab3.service.OrderService;
+import org.rekonvald.lab4.entity.Address;
+import org.rekonvald.lab4.entity.Order;
+import org.rekonvald.lab4.entity.OrderStatus;
+import org.rekonvald.lab4.service.AddressService;
+import org.rekonvald.lab4.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

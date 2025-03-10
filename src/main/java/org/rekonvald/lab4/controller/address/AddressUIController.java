@@ -1,9 +1,9 @@
-package org.rekonvald.lab3.controller.address;
+package org.rekonvald.lab4.controller.address;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab3.entity.Address;
-import org.rekonvald.lab3.service.AddressService;
+import org.rekonvald.lab4.entity.Address;
+import org.rekonvald.lab4.service.AddressService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

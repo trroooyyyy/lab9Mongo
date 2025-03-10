@@ -1,8 +1,8 @@
-package org.rekonvald.lab3.controller.address;
+package org.rekonvald.lab4.controller.address;
 
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab3.entity.Address;
-import org.rekonvald.lab3.service.AddressService;
+import org.rekonvald.lab4.entity.Address;
+import org.rekonvald.lab4.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
