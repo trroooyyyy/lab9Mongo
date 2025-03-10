@@ -1,19 +1,26 @@
 package org.rekonvald.lab4.entity;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
+@Entity
+@Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Ім'я користувача не може бути порожнім")
+    @Column(length = 50, nullable = false, unique = true)
+    @Size(min = 3, max = 50, message = "Ім'я користувача має бути від 3 до 50 символів")
     private String username;
 
-    @NotEmpty(message = "Пароль не може бути порожнім")
+    @Column(length = 100, nullable = false)
+    @Size(min = 6, max = 100, message = "Пароль має бути від 6 до 100 символів")
     private String password;
 }

@@ -1,64 +1,63 @@
 package org.rekonvald.lab4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.rekonvald.lab4.entity.Order;
 import org.rekonvald.lab4.entity.OrderStatus;
+import org.rekonvald.lab4.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    private final List<Order> orders;
-    private Long currentId;
+    private final OrderRepository orderRepository;
 
-    public OrderService() {
-        orders = new ArrayList<>();
-        currentId = 1L;
-        orders.add(new Order(currentId++, "some order desc", OrderStatus.PREPARING, 1L));
-        orders.add(new Order(currentId++, "some order desc", OrderStatus.DELIVERED, 2L));
-        orders.add(new Order(currentId++, "some order desc", OrderStatus.ON_THE_WAY, 3L));
-    }
-
+    @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
-        return orders;
+        return orderRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Order getOrderById(Long id) {
-        return orders.stream().filter(order -> order.getId().equals(id)).findFirst().orElseThrow(() -> new NoSuchElementException("Order not found"));
+        return orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with ID " + id + " not found"));
     }
 
+    @Transactional
     public Order createOrder(Order order) {
-        order.setId(currentId++);
-        orders.add(order);
-        return order;
+        return orderRepository.save(order);
     }
 
-    public Order updateOrder(Order newOrder) {
-        Order existingOrder = getOrderById(newOrder.getId());
+    @Transactional
+    public Order updateOrder(Long id, Order updatedOrder) {
+        Order existingOrder = getOrderById(id);
 
-        existingOrder.setDescription(newOrder.getDescription());
-        existingOrder.setStatus(newOrder.getStatus());
-        existingOrder.setAddressId(newOrder.getAddressId());
+        existingOrder.setDescription(updatedOrder.getDescription());
+        existingOrder.setStatus(updatedOrder.getStatus());
+        existingOrder.setAddress(updatedOrder.getAddress());
+        existingOrder.setUser(updatedOrder.getUser());
 
-        return existingOrder;
+        return orderRepository.save(existingOrder);
     }
 
+    @Transactional
     public Order cancelDelivery(Long id) {
         Order order = getOrderById(id);
         order.setStatus(OrderStatus.CANCELLED);
-        return order;
+        return orderRepository.save(order);
     }
 
+    @Transactional
     public OrderStatus getOrderStatus(Long id) {
-        Order order = getOrderById(id);
-        return order.getStatus();
+        return getOrderById(id).getStatus();
     }
 
+    @Transactional
     public void deleteOrder(Long id) {
         Order order = getOrderById(id);
-        orders.remove(order);
+        orderRepository.delete(order);
     }
 }

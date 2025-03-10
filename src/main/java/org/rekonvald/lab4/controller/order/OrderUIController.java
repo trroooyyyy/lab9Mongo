@@ -28,7 +28,7 @@ public class OrderUIController {
         List<Address> addresses = addressService.getAllAddresses();
         Order order = new Order();
         order.setStatus(OrderStatus.PREPARING);
-        order.setAddressId(1L);
+        order.setAddress(addresses.get(0));
         model.addAttribute("orders", orders);
         model.addAttribute("addresses", addresses);
         model.addAttribute("statuses", OrderStatus.values());
@@ -70,7 +70,7 @@ public class OrderUIController {
         }
 
         order.setId(id);
-        orderService.updateOrder(order);
+        orderService.updateOrder(id, order);
         return "redirect:/ui/orders/";
     }
 

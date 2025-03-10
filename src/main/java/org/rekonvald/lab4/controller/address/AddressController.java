@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class AddressController {
+
     private final AddressService addressService;
 
     @GetMapping("/address")
@@ -30,14 +31,14 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAddress(address));
     }
 
-    @PutMapping("/address")
-    public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
-        return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(address));
+    @PutMapping("/address/{id}")
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
+        return ResponseEntity.ok(addressService.updateAddress(id, address));
     }
 
     @DeleteMapping("/address/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         addressService.deleteAddress(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }

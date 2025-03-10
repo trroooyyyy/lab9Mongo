@@ -1,53 +1,58 @@
 package org.rekonvald.lab4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.rekonvald.lab4.entity.Address;
+import org.rekonvald.lab4.repository.AddressRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class AddressService {
 
-    private final List<Address> addresses;
-    private Long currentId;
+    private final AddressRepository addressRepository;
 
-    public AddressService() {
-        addresses = new ArrayList<>();
-        currentId = 1L;
-        addresses.add(new Address(currentId++, "Franka", "1A"));
-        addresses.add(new Address(currentId++, "Shevchenka", "2B"));
-        addresses.add(new Address(currentId++, "Holovna", "3C"));
-    }
-
+    @Transactional(readOnly = true)
     public List<Address> getAllAddresses() {
-        return addresses;
+        return addressRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Address getAddressById(Long id) {
-        return addresses.stream()
-                .filter(address -> address.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Address not found"));
+        return addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found with id: " + id));
     }
 
+    @Transactional
     public Address createAddress(Address address) {
-        address.setId(currentId++);
-        addresses.add(address);
-        return address;
+        if (addressRepository.findAll().stream().anyMatch(existingAddress -> existingAddress.getStreetAddress().equals(address.getStreetAddress()) && existingAddress.getApartment().equals(address.getApartment()))) {
+            throw new IllegalArgumentException("Address already exists with the same street and apartment");
+        }
+
+        return addressRepository.save(address);
     }
 
-    public Address updateAddress(Address newAddress) {
-        Address existingAddress = getAddressById(newAddress.getId());
+    @Transactional
+    public Address updateAddress(Long id, Address newAddress) {
+        Address existingAddress = getAddressById(id);
 
-        existingAddress.setAddress(newAddress.getAddress());
+        if (addressRepository.findAll().stream().anyMatch(existing -> existing.getStreetAddress().equals(newAddress.getStreetAddress()) && existing.getApartment().equals(newAddress.getApartment()) && !existing.getId().equals(id))) {
+            throw new IllegalArgumentException("Address already exists with the same street and apartment");
+        }
+
+        existingAddress.setStreetAddress(newAddress.getStreetAddress());
         existingAddress.setApartment(newAddress.getApartment());
 
-        return existingAddress;
+        return addressRepository.save(existingAddress);
     }
 
+
+    @Transactional
     public void deleteAddress(Long id) {
-        addresses.remove(getAddressById(id));
+        if (!addressRepository.existsById(id)) {
+            throw new RuntimeException("Address not found with id: " + id);
+        }
+        addressRepository.deleteById(id);
     }
 }

@@ -36,9 +36,9 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(order));
     }
 
-    @PutMapping("/order")
-    public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-        return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(order));
+    @PutMapping("/order/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(id, updatedOrder));
     }
 
     @PatchMapping("/order/cancel/{id}")

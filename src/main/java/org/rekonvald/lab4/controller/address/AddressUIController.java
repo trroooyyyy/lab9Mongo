@@ -34,8 +34,15 @@ public class AddressUIController {
             return "addresses_list";
         }
 
-        addressService.createAddress(address);
-        return "redirect:/ui/addresses/";
+        try {
+            addressService.createAddress(address);
+            return "redirect:/ui/addresses/";
+        } catch (IllegalArgumentException e) {
+            List<Address> addresses = addressService.getAllAddresses();
+            model.addAttribute("addresses", addresses);
+            model.addAttribute("error", "Така адреса вже була додана");
+            return "addresses_list";
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -46,16 +53,21 @@ public class AddressUIController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editAddress(@PathVariable("id") Long id,@Valid @ModelAttribute("address") Address address, BindingResult result, Model model) {
+    public String editAddress(@PathVariable("id") Long id, @Valid @ModelAttribute("address") Address address, BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<Address> addresses = addressService.getAllAddresses();
             model.addAttribute("addresses", addresses);
             return "edit_address";
         }
 
-        address.setId(id);
-        addressService.updateAddress(address);
-        return "redirect:/ui/addresses/";
+        try {
+            address.setId(id);
+            addressService.updateAddress(id, address);
+            return "redirect:/ui/addresses/";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "Адреса вже існує");
+            return "edit_address";
+        }
     }
 
     @GetMapping("/delete/{id}")

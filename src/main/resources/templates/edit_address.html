@@ -11,11 +11,11 @@
 
     <form th:action="@{/ui/addresses/edit/{id}(id=${address.id})}" th:object="${address}" method="post">
         <div class="mb-3">
-            <label for="address" class="form-label">Адреса</label>
-            <input type="text" id="address" th:field="*{address}" class="form-control" placeholder="Введіть адресу">
+            <label for="streetAddress" class="form-label">Адреса</label>
+            <input type="text" id="streetAddress" th:field="*{streetAddress}" class="form-control" placeholder="Введіть адресу">
 
-            <div th:if="${#fields.hasErrors('address')}" class="text-danger">
-                <span th:errors="*{address}">Адреса не може бути порожньою</span>
+            <div th:if="${#fields.hasErrors('streetAddress')}" class="text-danger">
+                <span th:errors="*{streetAddress}"></span>
             </div>
         </div>
 
@@ -25,13 +25,18 @@
                    placeholder="Введіть номер квартири">
 
             <div th:if="${#fields.hasErrors('apartment')}" class="text-danger">
-                <span th:errors="*{apartment}">Номер квартири не може бути порожнім</span>
+                <span th:errors="*{apartment}"></span>
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Зберегти зміни</button>
         <a th:href="@{/ui/addresses/}" class="btn btn-secondary">Назад</a>
     </form>
+
+    <div th:if="${error != null}" class="alert alert-danger mt-3">
+        <span th:text="${error}"></span>
+    </div>
+
 </div>
 </body>
 </html>

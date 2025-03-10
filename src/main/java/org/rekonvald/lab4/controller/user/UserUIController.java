@@ -27,18 +27,6 @@ public class UserUIController {
         return "users_list";
     }
 
-    @PostMapping("/add")
-    public String addUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            List<User> users = userService.getAllUsers();
-            model.addAttribute("users", users);
-            return "users_list";
-        }
-
-        userService.registerUser(user);
-        return "redirect:/ui/users/";
-    }
-
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
         User user = userService.getUserById(id);
@@ -54,9 +42,14 @@ public class UserUIController {
             return "edit_user";
         }
 
-        user.setId(id);
-        userService.updateUser(user);
-        return "redirect:/ui/users/";
+        try {
+            user.setId(id);
+            userService.updateUser(id, user);
+            return "redirect:/ui/users/";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "Користувач з таким іменем уже існує");
+            return "edit_user";
+        }
     }
 
     @GetMapping("/delete/{id}")
@@ -72,13 +65,18 @@ public class UserUIController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute User user, BindingResult result) {
+    public String registerUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register_user";
         }
 
-        userService.registerUser(user);
-        return "redirect:/ui/users/";
+        try {
+            userService.registerUser(user);
+            return "redirect:/ui/users/";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "Користувач з таким іменем уже існує");
+            return "register_user";
+        }
     }
 
     @GetMapping("/login")
@@ -88,9 +86,8 @@ public class UserUIController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model) {
-        if (user.getUsername() == null || user.getUsername().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()) {
-            model.addAttribute("error", "Логін або пароль не можуть бути порожніми");
+    public String loginUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             return "login_user";
         }
 
