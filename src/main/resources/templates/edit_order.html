@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагування замовлення</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Редагування замовлення</h1>
+
+    <form th:action="@{/ui/orders/edit/{id}(id=${order.id})}" th:object="${order}" method="post">
+        <div class="mb-3">
+            <label for="description" class="form-label">Опис замовлення</label>
+            <input type="text" id="description" th:field="*{description}" class="form-control" placeholder="Введіть опис замовлення">
+            <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                <span th:errors="*{description}"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="status" class="form-label">Статус замовлення</label>
+            <select id="status" th:field="*{status}" class="form-control">
+                <option value="" th:selected="*{status == null}">Оберіть статус</option>
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+            </select>
+
+            <div th:if="${#fields.hasErrors('status')}" class="text-danger">
+                <span th:errors="*{status}">Статус не може бути порожнім</span>
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            <label for="addressId" class="form-label">Адреса</label>
+            <select id="addressId" th:field="*{addressId}" class="form-control">
+                <option value="" th:selected="*{addressId == null}">Оберіть адресу</option>
+                <option th:each="address : ${addresses}" th:value="${address.id}" th:text="|${address.address}, ${address.apartment}|"></option>
+            </select>
+
+            <div th:if="${#fields.hasErrors('addressId')}" class="text-danger">
+                <span th:errors="*{addressId}">Адреса не може бути порожньою</span>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success">Зберегти зміни</button>
+        <a th:href="@{/ui/orders/}" class="btn btn-secondary">Скасувати</a>
+    </form>
+</div>
+</body>
+</html>

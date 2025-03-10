@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вхід користувача</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Вхід у систему</h1>
+
+    <form th:action="@{/ui/users/login}" th:object="${user}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Логін</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Введіть логін">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Введіть пароль">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Увійти</button>
+    </form>
+
+    <hr>
+
+    <p>Ще не маєте акаунта? <a th:href="@{/ui/users/register}">Зареєструватися</a></p>
+
+    <div th:if="${error != null}" class="alert alert-danger mt-3">
+        <span th:text="${error}"></span>
+    </div>
+</div>
+</body>
+</html>

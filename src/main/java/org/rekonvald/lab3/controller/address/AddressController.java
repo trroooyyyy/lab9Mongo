@@ -1,27 +1,19 @@
-package org.rekonvald.lab3.controller;
+package org.rekonvald.lab3.controller.address;
 
+import lombok.RequiredArgsConstructor;
 import org.rekonvald.lab3.entity.Address;
 import org.rekonvald.lab3.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class AddressController {
     private final AddressService addressService;
-
-    public AddressController(AddressService addressService) {
-        this.addressService = addressService;
-    }
 
     @GetMapping("/address")
     public ResponseEntity<List<Address>> getAddresses() {
@@ -29,7 +21,7 @@ public class AddressController {
     }
 
     @GetMapping("/address/{id}")
-    public ResponseEntity<Address> getAddress(@PathVariable String id) {
+    public ResponseEntity<Address> getAddress(@PathVariable Long id) {
         return ResponseEntity.ok(addressService.getAddressById(id));
     }
 
@@ -41,5 +33,11 @@ public class AddressController {
     @PutMapping("/address")
     public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(address));
+    }
+
+    @DeleteMapping("/address/{id}")
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
+        addressService.deleteAddress(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

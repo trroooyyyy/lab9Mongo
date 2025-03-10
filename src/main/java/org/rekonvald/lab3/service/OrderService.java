@@ -1,6 +1,7 @@
 package org.rekonvald.lab3.service;
 
 import org.rekonvald.lab3.entity.Order;
+import org.rekonvald.lab3.entity.OrderStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,47 +12,53 @@ import java.util.NoSuchElementException;
 public class OrderService {
 
     private final List<Order> orders;
+    private Long currentId;
 
     public OrderService() {
         orders = new ArrayList<>();
-        orders.add(new Order("1", "On the way", "1"));
-        orders.add(new Order("2", "Preparing", "2"));
-        orders.add(new Order("3", "Delivered", "3"));
+        currentId = 1L;
+        orders.add(new Order(currentId++, "some order desc", OrderStatus.PREPARING, 1L));
+        orders.add(new Order(currentId++, "some order desc", OrderStatus.DELIVERED, 2L));
+        orders.add(new Order(currentId++, "some order desc", OrderStatus.ON_THE_WAY, 3L));
     }
 
     public List<Order> getAllOrders() {
         return orders;
     }
 
-    public Order getOrderById(String id) {
-        return orders.stream().filter(status -> status.getId().equals(id)).findFirst().orElseThrow(NoSuchElementException::new);
+    public Order getOrderById(Long id) {
+        return orders.stream().filter(order -> order.getId().equals(id)).findFirst().orElseThrow(() -> new NoSuchElementException("Order not found"));
     }
 
     public Order createOrder(Order order) {
+        order.setId(currentId++);
         orders.add(order);
-
         return order;
     }
 
     public Order updateOrder(Order newOrder) {
-        Order order = getOrderById(newOrder.getId());
+        Order existingOrder = getOrderById(newOrder.getId());
 
-        order.setStatus(newOrder.getStatus());
-        order.setAddressId(newOrder.getAddressId());
+        existingOrder.setDescription(newOrder.getDescription());
+        existingOrder.setStatus(newOrder.getStatus());
+        existingOrder.setAddressId(newOrder.getAddressId());
 
-        return order;
+        return existingOrder;
     }
 
-    public Order cancelDelivery(String id) {
+    public Order cancelDelivery(Long id) {
         Order order = getOrderById(id);
-
-        order.setStatus("Cancelled");
-
+        order.setStatus(OrderStatus.CANCELLED);
         return order;
     }
 
-    public String getOrderStatus(String id) {
+    public OrderStatus getOrderStatus(Long id) {
         Order order = getOrderById(id);
         return order.getStatus();
+    }
+
+    public void deleteOrder(Long id) {
+        Order order = getOrderById(id);
+        orders.remove(order);
     }
 }

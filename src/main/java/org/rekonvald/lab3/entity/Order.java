@@ -1,14 +1,23 @@
 package org.rekonvald.lab3.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order {
-    private String id;
-    private String status;
-    private String addressId;
+    private Long id;
+
+    @NotEmpty(message = "Опис не може бути порожнім")
+    private String description;
+
+    @NotNull(message = "Статус не може бути порожнім")
+    private OrderStatus status;
+
+    @NotNull(message = "Адреса не може бути порожня")
+    private Long addressId;
 }

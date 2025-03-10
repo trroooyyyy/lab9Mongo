@@ -11,34 +11,43 @@ import java.util.NoSuchElementException;
 public class AddressService {
 
     private final List<Address> addresses;
+    private Long currentId;
 
     public AddressService() {
         addresses = new ArrayList<>();
-        addresses.add(new Address("1", "Franka", "1A"));
-        addresses.add(new Address("2", "Shevchenka", "2B"));
-        addresses.add(new Address("3", "Holovna", "3C"));
+        currentId = 1L;
+        addresses.add(new Address(currentId++, "Franka", "1A"));
+        addresses.add(new Address(currentId++, "Shevchenka", "2B"));
+        addresses.add(new Address(currentId++, "Holovna", "3C"));
     }
 
     public List<Address> getAllAddresses() {
         return addresses;
     }
 
-    public Address getAddressById(String id) {
-        return addresses.stream().filter(status -> status.getId().equals(id)).findFirst().orElseThrow(NoSuchElementException::new);
+    public Address getAddressById(Long id) {
+        return addresses.stream()
+                .filter(address -> address.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Address not found"));
     }
 
     public Address createAddress(Address address) {
+        address.setId(currentId++);
         addresses.add(address);
-
         return address;
     }
 
     public Address updateAddress(Address newAddress) {
-        Address address = getAddressById(newAddress.getId());
+        Address existingAddress = getAddressById(newAddress.getId());
 
-        address.setAddress(newAddress.getAddress());
-        address.setApartment(newAddress.getApartment());
+        existingAddress.setAddress(newAddress.getAddress());
+        existingAddress.setApartment(newAddress.getApartment());
 
-        return address;
+        return existingAddress;
+    }
+
+    public void deleteAddress(Long id) {
+        addresses.remove(getAddressById(id));
     }
 }

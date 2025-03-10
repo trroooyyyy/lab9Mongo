@@ -1,14 +1,19 @@
 package org.rekonvald.lab3.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Address {
-    private String id;
+    private Long id;
+
+    @NotEmpty(message = "Адреса не може бути порожньою")
     private String address;
+
+    @NotEmpty(message = "Номер квартири не може бути порожнім")
     private String apartment;
 }

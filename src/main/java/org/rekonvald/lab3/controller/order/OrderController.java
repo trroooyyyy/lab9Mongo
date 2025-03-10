@@ -1,28 +1,20 @@
-package org.rekonvald.lab3.controller;
+package org.rekonvald.lab3.controller.order;
 
+import lombok.RequiredArgsConstructor;
 import org.rekonvald.lab3.entity.Order;
+import org.rekonvald.lab3.entity.OrderStatus;
 import org.rekonvald.lab3.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class OrderController {
     private final OrderService orderService;
-
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
 
     @GetMapping("/order")
     public ResponseEntity<List<Order>> getOrders() {
@@ -30,12 +22,12 @@ public class OrderController {
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable String id) {
+    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping("/order/status/{id}")
-    public ResponseEntity<String> getOrderStatus(@PathVariable String id) {
+    public ResponseEntity<OrderStatus> getOrderStatus(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderStatus(id));
     }
 
@@ -50,7 +42,13 @@ public class OrderController {
     }
 
     @PatchMapping("/order/cancel/{id}")
-    public ResponseEntity<Order> cancelOrder(@PathVariable String id) {
+    public ResponseEntity<Order> cancelOrder(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.cancelDelivery(id));
+    }
+
+    @DeleteMapping("/order/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

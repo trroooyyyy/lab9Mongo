@@ -1,13 +1,19 @@
 package org.rekonvald.lab3.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User {
+    private Long id;
+
+    @NotEmpty(message = "Ім'я користувача не може бути порожнім")
     private String username;
+
+    @NotEmpty(message = "Пароль не може бути порожнім")
     private String password;
 }
