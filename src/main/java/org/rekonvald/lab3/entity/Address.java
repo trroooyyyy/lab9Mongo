@@ -1,4 +1,4 @@
-package org.rekonvald.lab2.entity;
+package org.rekonvald.lab3.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
-  private String id;
-  private String address;
-  private String apartment;
+    private String id;
+    private String address;
+    private String apartment;
 }
