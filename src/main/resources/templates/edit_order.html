@@ -10,11 +10,22 @@
     <h1>Редагування замовлення</h1>
 
     <form th:action="@{/ui/orders/edit/{id}(id=${order.id})}" th:object="${order}" method="post">
+
         <div class="mb-3">
-            <label for="description" class="form-label">Опис замовлення</label>
-            <input type="text" id="description" th:field="*{description}" class="form-control" placeholder="Введіть опис замовлення">
-            <div th:if="${#fields.hasErrors('description')}" class="text-danger">
-                <span th:errors="*{description}"></span>
+            <label for="orderDescription" class="form-label">Опис замовлення</label>
+            <input type="text" id="orderDescription" th:field="*{orderDescription}" class="form-control"
+                   placeholder="Введіть опис замовлення">
+            <div th:if="${#fields.hasErrors('orderDescription')}" class="text-danger">
+                <span th:errors="*{orderDescription}"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="restaurantDescription" class="form-label">Опис ресторану</label>
+            <input type="text" id="restaurantDescription" th:field="*{restaurantDescription}" class="form-control"
+                   placeholder="Введіть опис ресторану">
+            <div th:if="${#fields.hasErrors('restaurantDescription')}" class="text-danger">
+                <span th:errors="*{restaurantDescription}"></span>
             </div>
         </div>
 
@@ -24,24 +35,32 @@
                 <option value="" th:selected="*{status == null}">Оберіть статус</option>
                 <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
             </select>
-
             <div th:if="${#fields.hasErrors('status')}" class="text-danger">
-                <span th:errors="*{status}">Статус не може бути порожнім</span>
+                <span th:errors="*{status}"></span>
             </div>
-
         </div>
 
         <div class="mb-3">
-            <label for="addressId" class="form-label">Адреса</label>
-            <select id="addressId" th:field="*{addressId}" class="form-control">
-                <option value="" th:selected="*{addressId == null}">Оберіть адресу</option>
-                <option th:each="address : ${addresses}" th:value="${address.id}" th:text="|${address.address}, ${address.apartment}|"></option>
+            <label for="address" class="form-label">Адреса</label>
+            <select id="address" th:field="*{address}" class="form-control">
+                <option value="" th:selected="*{address == null}">Оберіть адресу</option>
+                <option th:each="addr : ${addresses}" th:value="${addr.id}"
+                        th:text="|${addr.id} - ${addr.streetAddress}, ${addr.apartment}|"></option>
             </select>
-
-            <div th:if="${#fields.hasErrors('addressId')}" class="text-danger">
-                <span th:errors="*{addressId}">Адреса не може бути порожньою</span>
+            <div th:if="${#fields.hasErrors('address')}" class="text-danger">
+                <span th:errors="*{address}"></span>
             </div>
+        </div>
 
+        <div class="mb-3">
+            <label for="user" class="form-label">Користувач</label>
+            <select id="user" th:field="*{user}" class="form-control">
+                <option value="" th:selected="*{user == null}">Оберіть користувача</option>
+                <option th:each="usr : ${users}" th:value="${usr.id}" th:text="|${usr.id} - ${usr.username}|"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('user')}" class="text-danger">
+                <span th:errors="*{user}"></span>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-success">Зберегти зміни</button>

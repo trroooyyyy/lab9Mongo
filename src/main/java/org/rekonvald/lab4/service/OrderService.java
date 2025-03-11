@@ -35,7 +35,8 @@ public class OrderService {
     public Order updateOrder(Long id, Order updatedOrder) {
         Order existingOrder = getOrderById(id);
 
-        existingOrder.setDescription(updatedOrder.getDescription());
+        existingOrder.setOrderDescription(updatedOrder.getOrderDescription());
+        existingOrder.setRestaurantDescription(updatedOrder.getRestaurantDescription());
         existingOrder.setStatus(updatedOrder.getStatus());
         existingOrder.setAddress(updatedOrder.getAddress());
         existingOrder.setUser(updatedOrder.getUser());
