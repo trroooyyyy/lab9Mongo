@@ -1,6 +1,6 @@
 spring:
     application:
-        name: lab4
+        name: lab5
     thymeleaf:
         prefix: classpath:/templates/
         suffix: .html

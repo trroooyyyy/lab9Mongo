@@ -1,9 +1,9 @@
-package org.rekonvald.lab4.service;
+package org.rekonvald.lab5.service;
 
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab4.entity.Order;
-import org.rekonvald.lab4.entity.OrderStatus;
-import org.rekonvald.lab4.repository.OrderRepository;
+import org.rekonvald.lab5.entity.Order;
+import org.rekonvald.lab5.entity.OrderStatus;
+import org.rekonvald.lab5.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

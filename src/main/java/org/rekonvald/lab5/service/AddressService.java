@@ -1,8 +1,8 @@
-package org.rekonvald.lab4.service;
+package org.rekonvald.lab5.service;
 
 import lombok.RequiredArgsConstructor;
-import org.rekonvald.lab4.entity.Address;
-import org.rekonvald.lab4.repository.AddressRepository;
+import org.rekonvald.lab5.entity.Address;
+import org.rekonvald.lab5.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

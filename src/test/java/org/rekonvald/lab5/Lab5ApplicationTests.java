@@ -1,10 +1,10 @@
-package org.rekonvald.lab4;
+package org.rekonvald.lab5;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Lab4ApplicationTests {
+class Lab5ApplicationTests {
 
   @Test
   void contextLoads() {

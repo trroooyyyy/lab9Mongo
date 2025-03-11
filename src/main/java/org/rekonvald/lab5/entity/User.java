@@ -1,4 +1,4 @@
-package org.rekonvald.lab4.entity;
+package org.rekonvald.lab5.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
