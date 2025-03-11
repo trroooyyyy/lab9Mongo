@@ -13,12 +13,18 @@
     <thead>
     <tr>
       <th>Логін</th>
+      <th>Ім'я</th>
+      <th>Прізвище</th>
+      <th>Телефон</th>
       <th>Дії</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
       <td th:text="${user.username}"></td>
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.surname}"></td>
+      <td th:text="${user.phone}"></td>
       <td>
         <a th:href="@{/ui/users/edit/{id}(id=${user.id})}" class="btn btn-warning">Редагувати</a>
         <a th:href="@{/ui/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Видалити</a>

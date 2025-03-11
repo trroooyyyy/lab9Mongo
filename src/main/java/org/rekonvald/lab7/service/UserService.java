@@ -27,17 +27,22 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserByUsername(String username) {
-        return userRepository.findAll().stream().filter(user -> user.getUsername().equals(username)).findFirst().orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found"));
     }
 
     @Transactional
     public void registerUser(User user) {
-        if (userRepository.findAll().stream().anyMatch(existingUser -> existingUser.getUsername().equals(user.getUsername()))) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
+        }
+
+        if (userRepository.existsByPhone(user.getPhone())) {
+            throw new IllegalArgumentException("Phone already exists");
         }
 
         userRepository.save(user);
     }
+
 
     @Transactional
     public User login(User user) {
@@ -58,13 +63,21 @@ public class UserService {
     public User updateUser(Long id, User newUser) {
         User existingUser = getUserById(id);
 
-        if (userRepository.findAll().stream().anyMatch(user -> user.getUsername().equals(newUser.getUsername()) && !user.getId().equals(existingUser.getId()))) {
+        if (userRepository.existsByUsername(newUser.getUsername()) && !existingUser.getUsername().equals(newUser.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
         }
 
+        if (userRepository.existsByPhone(newUser.getPhone()) && !existingUser.getPhone().equals(newUser.getPhone())) {
+            throw new IllegalArgumentException("Phone already exists");
+        }
+
         existingUser.setUsername(newUser.getUsername());
+        existingUser.setName(newUser.getName());
+        existingUser.setSurname(newUser.getSurname());
         existingUser.setPassword(newUser.getPassword());
+        existingUser.setPhone(newUser.getPhone());
 
         return userRepository.save(existingUser);
     }
+
 }

@@ -47,7 +47,7 @@ public class UserUIController {
             userService.updateUser(id, user);
             return "redirect:/ui/users/";
         } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "Користувач з таким іменем уже існує");
+            model.addAttribute("error", "Користувач з таким іменем чи телефоном уже існує");
             return "edit_user";
         }
     }
@@ -74,7 +74,7 @@ public class UserUIController {
             userService.registerUser(user);
             return "redirect:/ui/users/";
         } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "Користувач з таким іменем уже існує");
+            model.addAttribute("error", "Користувач з таким іменем чи телефоном уже існує");
             return "register_user";
         }
     }

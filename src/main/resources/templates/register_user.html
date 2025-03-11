@@ -13,9 +13,26 @@
         <div class="mb-3">
             <label for="username" class="form-label">Логін</label>
             <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Введіть логін">
-
             <div th:if="${#fields.hasErrors('username')}" class="text-danger">
                 <span th:errors="*{username}"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Ім'я</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Введіть ім'я">
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Прізвище</label>
+            <input type="text" id="surname" th:field="*{surname}" class="form-control" placeholder="Введіть прізвище">
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Номер телефону</label>
+            <input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="Введіть номер телефону">
+            <div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+                <span th:errors="*{phone}"></span>
             </div>
         </div>
 
@@ -23,7 +40,6 @@
             <label for="password" class="form-label">Пароль</label>
             <input type="password" id="password" th:field="*{password}" class="form-control"
                    placeholder="Введіть пароль">
-
             <div th:if="${#fields.hasErrors('password')}" class="text-danger">
                 <span th:errors="*{password}"></span>
             </div>
