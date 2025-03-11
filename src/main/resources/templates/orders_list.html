@@ -23,9 +23,6 @@
             <label for="restaurantDescription" class="form-label">Опис ресторану</label>
             <input type="text" id="restaurantDescription" th:field="*{restaurantDescription}" class="form-control"
                    placeholder="Введіть опис ресторану">
-            <div th:if="${#fields.hasErrors('restaurantDescription')}" class="text-danger">
-                <span th:errors="*{restaurantDescription}"></span>
-            </div>
         </div>
 
         <div class="mb-3">

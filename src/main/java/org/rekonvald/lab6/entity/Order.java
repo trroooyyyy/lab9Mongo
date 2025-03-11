@@ -14,6 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,7 @@ public class Order {
     @Column(length = 1000, nullable = false)
     private String orderDescription;
 
-    @Column(length = 100, nullable = false)
-    @NotEmpty(message = "Опис ресторану не може бути порожнім")
+    @Column(length = 100)
     private String restaurantDescription;
 
     @Enumerated(EnumType.STRING)
