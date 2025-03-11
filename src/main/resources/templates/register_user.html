@@ -7,6 +7,13 @@
 </head>
 <body>
 <div class="container mt-5">
+
+    <div class="mb-4">
+        <a href="/ui/addresses/" class="btn btn-secondary">Перейти до адрес</a>
+        <a href="/ui/orders/" class="btn btn-secondary">Перейти до замовлень</a>
+        <a href="/ui/users/" class="btn btn-secondary">Перейти до користувачів</a>
+    </div>
+
     <h1>Реєстрація нового користувача</h1>
 
     <form th:action="@{/ui/users/register}" th:object="${user}" method="post">

@@ -3,6 +3,7 @@ package org.rekonvald.lab7.service;
 import lombok.RequiredArgsConstructor;
 import org.rekonvald.lab7.entity.User;
 import org.rekonvald.lab7.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.NoSuchElementException;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
@@ -40,18 +42,8 @@ public class UserService {
             throw new IllegalArgumentException("Phone already exists");
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-    }
-
-
-    @Transactional
-    public User login(User user) {
-        User existingUser = getUserByUsername(user.getUsername());
-        if (!existingUser.getPassword().equals(user.getPassword())) {
-            throw new NoSuchElementException("Invalid username or password");
-        }
-
-        return existingUser;
     }
 
     @Transactional
@@ -74,10 +66,9 @@ public class UserService {
         existingUser.setUsername(newUser.getUsername());
         existingUser.setName(newUser.getName());
         existingUser.setSurname(newUser.getSurname());
-        existingUser.setPassword(newUser.getPassword());
+        existingUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         existingUser.setPhone(newUser.getPhone());
 
         return userRepository.save(existingUser);
     }
-
 }

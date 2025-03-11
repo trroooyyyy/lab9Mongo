@@ -25,15 +25,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody User user) {
-        if (userService.login(user) == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-        }
-
-        return ResponseEntity.ok("You were successfully authenticated.");
-    }
-
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         userService.registerUser(user);

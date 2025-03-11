@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/ui/users")
@@ -72,7 +71,7 @@ public class UserUIController {
 
         try {
             userService.registerUser(user);
-            return "redirect:/ui/users/";
+            return "redirect:/ui/users/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", "Користувач з таким іменем чи телефоном уже існує");
             return "register_user";
@@ -83,20 +82,5 @@ public class UserUIController {
     public String showLoginForm(Model model) {
         model.addAttribute("user", new User());
         return "login_user";
-    }
-
-    @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "login_user";
-        }
-
-        try {
-            userService.login(user);
-            return "redirect:/ui/users/";
-        } catch (NoSuchElementException e) {
-            model.addAttribute("error", "Невірний логін або пароль");
-            return "login_user";
-        }
     }
 }
