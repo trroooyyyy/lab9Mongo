@@ -1,14 +1,6 @@
 spring:
     application:
-        name: lab7
-    thymeleaf:
-        prefix: classpath:/templates/
-        suffix: .html
-    datasource:
-        url: jdbc:postgresql://localhost:5432/food_service
-        username: trroooyyyy
-        password: "06062023"
-        driver-class-name: org.postgresql.Driver
+        name: lab9Mongo
     jpa:
         hibernate:
             ddl-auto: update
