@@ -1,11 +1,11 @@
 package org.rekonvald.lab9Mongo.entity;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "addresses")
+@Document(collection = "addresses")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,14 +14,11 @@ import lombok.*;
 @ToString
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(length = 100, nullable = false)
     @NotEmpty(message = "Адреса не може бути порожньою")
     private String streetAddress;
 
-    @Column(length = 20, nullable = false)
     @NotEmpty(message = "Номер квартири не може бути порожнім")
     private String apartment;
 }

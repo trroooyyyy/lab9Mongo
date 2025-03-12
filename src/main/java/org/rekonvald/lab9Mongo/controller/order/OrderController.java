@@ -22,12 +22,12 @@ public class OrderController {
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
+    public ResponseEntity<Order> getOrder(@PathVariable String id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping("/order/status/{id}")
-    public ResponseEntity<OrderStatus> getOrderStatus(@PathVariable Long id) {
+    public ResponseEntity<OrderStatus> getOrderStatus(@PathVariable String id) {
         return ResponseEntity.ok(orderService.getOrderStatus(id));
     }
 
@@ -37,17 +37,17 @@ public class OrderController {
     }
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
+    public ResponseEntity<Order> updateOrder(@PathVariable String id, @RequestBody Order updatedOrder) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(id, updatedOrder));
     }
 
     @PatchMapping("/order/cancel/{id}")
-    public ResponseEntity<Order> cancelOrder(@PathVariable Long id) {
+    public ResponseEntity<Order> cancelOrder(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.cancelDelivery(id));
     }
 
     @DeleteMapping("/order/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
         orderService.deleteOrder(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -23,7 +23,7 @@ public class LoggingAspect {
     }
 
     @Before(value = "Pointcuts.orderControllerMethodsWithId(id)", argNames = "id")
-    public void logArgumentsBeforeExecutionWithId(Long id) {
+    public void logArgumentsBeforeExecutionWithId(String id) {
         if (id != null) {
             logger.info("Method called with Order ID: {}", id);
         } else {
@@ -32,7 +32,7 @@ public class LoggingAspect {
     }
 
     @Before(value = "Pointcuts.editOrderMethod(id, order)", argNames = "id, order")
-    public void logEditOrderMethod(Long id, Order order) {
+    public void logEditOrderMethod(String id, Order order) {
         if (id != null) {
             logger.info("editOrder method called with ID: {}", id);
         } else {

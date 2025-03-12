@@ -1,9 +1,10 @@
 spring:
     application:
         name: lab9Mongo
-    jpa:
-        hibernate:
-            ddl-auto: update
+    data:
+        mongodb:
+            uri: mongodb://localhost:27017/connection
+            database: food-service
 
 rapidApi:
-    key: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    key: "b1f4fc3fd6msh7f28499bf2e73f4p1bc6e7jsn3d1f353d6a47"

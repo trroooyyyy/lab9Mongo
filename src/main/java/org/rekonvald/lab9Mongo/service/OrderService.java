@@ -5,7 +5,6 @@ import org.rekonvald.lab9Mongo.entity.Order;
 import org.rekonvald.lab9Mongo.entity.OrderStatus;
 import org.rekonvald.lab9Mongo.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,23 +15,20 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with ID " + id + " not found"));
+    public Order getOrderById(String id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Order with ID " + id + " not found"));
     }
 
-    @Transactional
     public Order createOrder(Order order) {
         return orderRepository.save(order);
     }
 
-    @Transactional
-    public Order updateOrder(Long id, Order updatedOrder) {
+    public Order updateOrder(String id, Order updatedOrder) {
         Order existingOrder = getOrderById(id);
 
         existingOrder.setOrderDescription(updatedOrder.getOrderDescription());
@@ -44,20 +40,17 @@ public class OrderService {
         return orderRepository.save(existingOrder);
     }
 
-    @Transactional
-    public Order cancelDelivery(Long id) {
+    public Order cancelDelivery(String id) {
         Order order = getOrderById(id);
         order.setStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order);
     }
 
-    @Transactional
-    public OrderStatus getOrderStatus(Long id) {
+    public OrderStatus getOrderStatus(String id) {
         return getOrderById(id).getStatus();
     }
 
-    @Transactional
-    public void deleteOrder(Long id) {
+    public void deleteOrder(String id) {
         Order order = getOrderById(id);
         orderRepository.delete(order);
     }

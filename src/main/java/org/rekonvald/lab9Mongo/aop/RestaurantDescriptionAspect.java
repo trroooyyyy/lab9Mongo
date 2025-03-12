@@ -17,7 +17,7 @@ public class RestaurantDescriptionAspect {
     }
 
     @Before(value = "Pointcuts.updateOrderMethod() && args(id, updatedOrder)", argNames = "id, updatedOrder")
-    public void setRestaurantDescriptionIfEmptyOnUpdate(Long id, Order updatedOrder) {
+    public void setRestaurantDescriptionIfEmptyOnUpdate(String id, Order updatedOrder) {
         if (updatedOrder.getRestaurantDescription() == null || updatedOrder.getRestaurantDescription().isEmpty()) {
             updatedOrder.setRestaurantDescription("НАЙБЛИЖЧИЙ");
         }
